@@ -1,5 +1,7 @@
 from card_dict import *
 
+def Change_Range_Not_Bang():
+
 def Set_Bomb_Buff(i,players):
     players[i].card_m(0,71)
     players[i].buff_m(1,71)

@@ -180,6 +180,5 @@ def Set_Equipment(i,players,selected):
         Equipment_Check_Same(i,players,selected)
     elif equip_card[card_dict[selected][4]][0]==1:
         Weapon_Check_Same(i,players,selected)
-    
 
-
+def Check_Range(i,players,target):  
