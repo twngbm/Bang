@@ -181,4 +181,25 @@ def Set_Equipment(i,players,selected):
     elif equip_card[card_dict[selected][4]][0]==1:
         Weapon_Check_Same(i,players,selected)
 
-def Check_Range(i,players,target):  
+def Check_Range_No_Weapon(i,players):  
+    temp_players_list=[]
+    temp_list=[]
+    for j in range(len(players)):
+        if players[j].blood>0:
+            temp_players_list.append(j)
+    for j in range(len(temp_players_list)):
+        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),abs(len(temp_players_list)-(temp_players_list.index(i)-temp_players_list.index(j))))
+        
+        if 65 in players[i].equip:
+            x=x-1
+        if 66 in players[j].equip or 67 in players[j].equip:
+            x=x+1
+        if x<=1:
+            temp_list.append(x)
+        
+    return temp_list
+
+            
+
+
+
