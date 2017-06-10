@@ -45,7 +45,9 @@ print("player number, id, char, (max_life,life),card,equip,status")
 #Print Player init status
 for i in range(person):
     players[i].print_status()
-
+players[0].setid(10)
+players[6].setid(8)
+players[1].setid(13)
 #Main Loop
 
 while True: #Game Loop
@@ -68,12 +70,12 @@ while True: #Game Loop
             continue
         #Buff Check Stage Finish
         
-        #Draw Card Stage9
+        #Draw Card Stage
       
-        players[i].card_m(1,71)
-        players[i].card_m(1,79)
-        players[i].card_m(1,76)
-        players[i].card_m(1,74)
+        players[i].card_m(1,43)
+        players[i].card_m(1,42)
+        players[i].card_m(1,41)
+        players[i].card_m(1,40)
         Darw_Card(i,players,card_list,wasted_card_list)
         players[i].print_status()
         #Draw Card Stage Finish
@@ -87,8 +89,8 @@ while True: #Game Loop
             if len(players[i].card)==0:
                 print("You have no more card,Force end turn.")
                 break
-            for j in range(len(players[i].card)):
-                print(players[i].card[j],card_dict[players[i].card[j]])
+            for j in players[i].card:
+                print(j,card_dict[j])
             print("input card ID to select a card to use it.")
             print("Or input 999 to end the turn")
             selected=int(input(":"))
@@ -100,23 +102,7 @@ while True: #Game Loop
             if card_dict[selected][1]==0:
                 pass
             elif card_dict[selected][1]==1:
-                if card_dict[selected][4]==1:
-                    pass
-                if card_dict[selected][4]==3:
-                    pass
-                if card_dict[selected][4]==4:
-                    pass
-                if card_dict[selected][4]==5:
-                    pass
-                if card_dict[selected][4]==6:
-                    pass
-                if card_dict[selected][4]==7:
-                    pass
-                if card_dict[selected][4]==50:
-                    pass
-                if card_dict[selected][4]==59:
-                    pass
-                 
+                Set_Function_Card(i,players,selected,card_list,wasted_card_list)
             elif card_dict[selected][1]==2:
                 Set_Equipment(i,players,selected)
             elif card_dict[selected][1]==3:

@@ -181,24 +181,29 @@ def Set_Equipment(i,players,selected):
     elif equip_card[card_dict[selected][4]][0]==1:
         Weapon_Check_Same(i,players,selected)
 
-def Check_Range_No_Weapon(i,players):  
-    temp_players_list=[]
-    temp_list=[]
-    for j in range(len(players)):
-        if players[j].blood>0:
-            temp_players_list.append(j)
-    for j in range(len(temp_players_list)):
-        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),abs(len(temp_players_list)-(temp_players_list.index(i)-temp_players_list.index(j))))
-        
-        if 65 in players[i].equip:
-            x=x-1
-        if 66 in players[j].equip or 67 in players[j].equip:
-            x=x+1
-        if x<=1:
-            temp_list.append(x)
-        
-    return temp_list
-
+def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
+    if card_dict[selected][4]==1:
+        pass
+    if card_dict[selected][4]==3:
+        status=Panic(i,players)
+    if card_dict[selected][4]==4:
+        pass
+    if card_dict[selected][4]==5:
+        pass
+    if card_dict[selected][4]==6:
+        pass
+    if card_dict[selected][4]==7:
+        pass
+    if card_dict[selected][4]==50:
+        pass
+    if card_dict[selected][4]==59:
+        pass
+    if status!=-1:
+        players[i].card_m(0,selected)
+        wasted_card_list.append(selected)
+    if players[status].identity==13:
+        Suzy_Lafayette(status,players,card_list)
+    
             
 
 

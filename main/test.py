@@ -3,11 +3,14 @@ from action import *
 
 players=[]
 
-for i  in range(5):
+for i  in range(8):
     players.append(player(i))
     players[i].blood_m(5)
     players[i].print_status()
-print(Check_Range_No_Weapon(1,players))
+x=0
+#players[x].equip_m(1,65)
+players[1].equip_m(1,66)
+print(Check_Range_No_Weapon(x,players))
 
 
 
