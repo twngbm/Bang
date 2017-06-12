@@ -1,13 +1,18 @@
 from card_dict import *
 from character_function import *
 
+def Alive_Player(players):
+    temp_player_list=[]
+    for i in range(len(players)):
+        if players[i].blood>0:
+            temp_player_list.append(i)
+    return temp_player_list
+
 
 def Check_Range_No_Weapon(i,players):  
-    temp_players_list=[]
+    temp_players_list=Alive_Player(players)
     temp_list=[]
-    for j in range(len(players)):
-        if players[j].blood>0:
-            temp_players_list.append(j)
+    
     for j in temp_players_list:
         if i ==j:
             continue
@@ -36,11 +41,9 @@ def Check_Range_No_Weapon(i,players):
         return x-1
 
 def Check_Range_Weapon(i,players):  
-    temp_players_list=[]
+    temp_players_list=Alive_Player(players)
     temp_list=[]
-    for j in range(len(players)):
-        if players[j].blood>0:
-            temp_players_list.append(j)
+    
     for j in temp_players_list:
         if i ==j:
             continue
@@ -179,6 +182,137 @@ def Panic(i,players):
         players[i].weapon_m(1,choosed_card)
         print("You have get",card_dict[choosed_card][0])
         return target
+
+def Cat_Balou(players,wasted_card_list):
+    temp_player_list=Alive_Player(players)
+    print("You can pick a target from ",temp_player_list)
+    target=int(input(":"))
+    if len(players[target].card)==0 and len(players[target].equip)==0 and len(players[target].weapon)==0:
+        print("Player",target+1,"has no more card")
+        return -1
+    temp_equip_list=[]
+    temp_weapon_list=[]
+    for j in players[target].equip:
+        temp_equip_list.append(card_dict[j][0])
+    for j in players[target].weapon:
+        temp_weapon_list.append(card_dict[j][0])
+    print("Player",target+1,"have",len(players[target].card),"cards and " ,temp_equip_list,"equipments and",temp_weapon_list,"weapon")
+    print("Enter 1 to darw a card or 2 to take a equipment or 3 to take a weapon")
+    choose=int(input(":"))
+    if choose ==1:
+        if len(players[target].card)==0:
+            print("players",target+1,"has no more card")
+            return -1
+        print("Enter 1~",len(players[target].card),"to draw one card.")
+        choosed_card=players[target].card[int(input(":"))-1]
+        players[target].card_m(0,choosed_card)
+        wasted_card_list.append(choosed_card)
+        
+        return 0
+    if choose==2:
+         if len(players[target].equip)==0:
+             print("players",target+1,"has no more equipment")
+             return -1
+         print("Enter a card ID from",players[target].equip,"to choose a card")
+         choosed_card=int(input(":"))
+         players[target].equip_m(0,choosed_card)
+         wasted_card_list.append(choosed_card)
+         return 0
+    if choose==3:
+        if len(players[target].weapon)==0:
+            print("players",target+1,"has no more weapon")
+            return -1
+        print("Enter a card ID from",players[target].weapon,"to choose a card")
+        choosed_card=int(input(":"))
+        players[target].weapon_m(0,choosed_card)
+        wasted_card_list.append(choosed_card)
+        return 0
+
+def Stagecoach(i,players,card_list):
+    print("You can darw two more card")
+    players[i].card_m(1,card_list.pop())
+    players[i].card_m(1,card_list.pop())
+    return 0
+
+def Wells(i,players,card_list):
+    print("You can darw three more card")
+    players[i].card_m(1,card_list.pop())
+    players[i].card_m(1,card_list.pop())
+    players[i].card_m(1,card_list.pop())
+    return 0
     
+def Beer(i,players,wasted_card_list):
+    if players[i].blood>0:
+        x=players[i].blood+1
+        if x>players[i].max_blood:
+            print("You had already reach your upper limit")
+            return -1
+        else:
+            print("You have gain 1 blood,your blood is",x,"now")
+            players[i].setblood(x)
+            return 0
+    elif players[i].blood<=0:
+        remain_beer=[]
+        for j in players[i].card:
+            if card_dict[j][4]==7:
+                remain_beer.append[j]
+        while True:
+            print("Player",i+1,"You have already dead now,you have",len(remain_beer),"beer now")
+            if players[i].blood>0:
+                print("Player",i+1,"You are alive now.")
+                print("Player",i+1,"You still have",len(remain_beer),"beer now.")
+                return 0
+            elif len(remain_beer)==0:
+                print("So sad,player",i+1,"you have no more beer,You are sure to be dead.")
+                return -1
+            elif len(remain_beer)+players[i].blood<=0:
+                print("So bad,player",i+1," you don't have enough beer to recovery your life.You are sure to be dead")
+                return -1
+            else:
+                print("Enter a beer card ID from",remain_beer)
+                choosed=int(input(":"))
+                players[i].blood_m(1)
+                remain_beer.remove(choosed)
+                players[i].card_m(0,choosed)
+                wasted_card_list.append(choosed)
+                print("Player",i+1,"You have recover 1 blood,you now have",players[i].blood,"blood now.")
+
+def Saloon(players):
+    for j in range(len(players)):
+        if players[j].blood<=0:
+            print("Player",j+1,"is already dead")
+            continue
+        elif players[j].blood==players[j].max_blood:
+            print("Player",j+1,"'s blood is already full")
+            continue
+        else:
+            players[j].blood_m(1)
+            print("Player",j+1,"have",players[j].blood,"blood now")
+    return 0
+
+def General_Store(i,players,card_list):
+    temp_players_list=Alive_Player(players)
+    temp_card_list=[]
+    
+    for j in temp_players_list:
+        temp_card_list.append(card_list.pop())
+    for j in range(len(players)):
+        print("Now have",len(temp_card_list),"cards to choose.")
+        for k in temp_card_list:
+            print(k,card_dict[k])
+        x=i+j
+        if x>=len(temp_players_list):
+            x=x-len(temp_players_list)
+        print("Player",x+1,"You can pick one card from above")
+        choose=int(input(":"))
+        temp_card_list.remove(choose)
+        print("Player",x+1,"You have get",card_dict[choose])
+        players[x].card_m(1,choose)
+    return 0
+
+
+
+
+
                     
                        

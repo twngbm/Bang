@@ -187,17 +187,17 @@ def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
     if card_dict[selected][4]==3:
         status=Panic(i,players)
     if card_dict[selected][4]==4:
-        pass
+        status=Cat_Balou(players,wasted_card_list)
     if card_dict[selected][4]==5:
-        pass
+        status=Stagecoach(i,players,card_list)
     if card_dict[selected][4]==6:
-        pass
+        status=General_Store(i,players,card_list)
     if card_dict[selected][4]==7:
-        pass
+        status=Beer(i,players,wasted_card_list)
     if card_dict[selected][4]==50:
-        pass
+        status=Wells(i,players,card_list)
     if card_dict[selected][4]==59:
-        pass
+        status=Saloon(players)
     if status!=-1:
         players[i].card_m(0,selected)
         wasted_card_list.append(selected)

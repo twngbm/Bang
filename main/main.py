@@ -45,9 +45,8 @@ print("player number, id, char, (max_life,life),card,equip,status")
 #Print Player init status
 for i in range(person):
     players[i].print_status()
-players[0].setid(10)
-players[6].setid(8)
-players[1].setid(13)
+
+
 #Main Loop
 
 while True: #Game Loop
@@ -71,11 +70,15 @@ while True: #Game Loop
         #Buff Check Stage Finish
         
         #Draw Card Stage
-      
-        players[i].card_m(1,43)
-        players[i].card_m(1,42)
-        players[i].card_m(1,41)
+        players[i].blood_m(-1)
         players[i].card_m(1,40)
+        players[i].card_m(1,44)
+        players[i].card_m(1,48)
+        players[i].card_m(1,49)
+        players[i].card_m(1,50)
+        players[i].card_m(1,51)
+        players[i].card_m(1,57)
+        players[i].card_m(1,59)
         Darw_Card(i,players,card_list,wasted_card_list)
         players[i].print_status()
         #Draw Card Stage Finish
