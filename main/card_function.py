@@ -57,7 +57,6 @@ def Check_Range_Weapon(i,players):
             x=x-1
         if players[j].identity==8:
             x=x+1
-
         if len(players[i].weapon)==0:
             x=x-1
         elif card_dict[players[i].weapon[0]][4]==13:
@@ -183,10 +182,12 @@ def Panic(i,players):
         print("You have get",card_dict[choosed_card][0])
         return target
 
-def Cat_Balou(players,wasted_card_list):
+def Cat_Balou(i,players,wasted_card_list):#ban card
     temp_player_list=Alive_Player(players)
+    temp_player_list.remove(i)
     print("You can pick a target from ",temp_player_list)
     target=int(input(":"))
+
     if len(players[target].card)==0 and len(players[target].equip)==0 and len(players[target].weapon)==0:
         print("Player",target+1,"has no more card")
         return -1

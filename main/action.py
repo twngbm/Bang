@@ -187,7 +187,7 @@ def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
     if card_dict[selected][4]==3:
         status=Panic(i,players)
     if card_dict[selected][4]==4:
-        status=Cat_Balou(players,wasted_card_list)
+        status=Cat_Balou(i,players,wasted_card_list)
     if card_dict[selected][4]==5:
         status=Stagecoach(i,players,card_list)
     if card_dict[selected][4]==6:
