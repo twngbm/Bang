@@ -1,87 +1,22 @@
 from card_dict import *
 from character_function import *
 
-def Alive_Player(players):
-    temp_player_list=[]
-    for i in range(len(players)):
-        if players[i].blood>0:
-            temp_player_list.append(i)
-    return temp_player_list
+def Damage_Judge(players,target,Barrel_Used):
+    temp_card_list=[]
+    if 63 in players[target].equip or 64 in players[target].equip:
+        barrel=1
+    else:
+        barrel=0
+    if players[target].identity==2:
+        print("Player",target+1,"Can use Bang as miss.")
+        for j in players[target].card:
+            if card_dict[j][4]==0 or card_dict[j][4]==1:
+                temp_card_list.append(j)
+        print("Player",target+1,"You have ",len(temp_card_list),"Miss! card now.")
+    else:
 
 
-def Check_Range_No_Weapon(i,players):  
-    temp_players_list=Alive_Player(players)
-    temp_list=[]
     
-    for j in temp_players_list:
-        if i ==j:
-            continue
-        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),len(temp_players_list)-abs(temp_players_list.index(i)-temp_players_list.index(j)))
-        
-        if 65 in players[i].equip:
-            x=x-1
-        if 66 in players[j].equip or 67 in players[j].equip:
-            x=x+1
-        if players[i].identity==10:
-            x=x-1
-        if players[j].identity==8:
-            x=x+1
-        if x<=1:
-            temp_list.append(j)
-    if len(temp_list)==0:
-        print("Everyone is out of your range, play another card or force end the round")
-        return -1
-    t_temp_list=[]
-    for k in temp_list:
-        t_temp_list.append(k+1)
-    print("Pick a Target from",t_temp_list)
-    x=int(input(":"))
-    if x in t_temp_list:
-        print("You have choose player",x,"as your target.")
-        return x-1
-
-def Check_Range_Weapon(i,players):  
-    temp_players_list=Alive_Player(players)
-    temp_list=[]
-    
-    for j in temp_players_list:
-        if i ==j:
-            continue
-        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),abs(len(temp_players_list)-(temp_players_list.index(i)-temp_players_list.index(j))))
-        
-        if 65 in players[i].equip:
-            x=x-1
-        if 66 in players[j].equip or 67 in players[j].equip:
-            x=x+1
-        if players[i].identity==10:
-            x=x-1
-        if players[j].identity==8:
-            x=x+1
-        if len(players[i].weapon)==0:
-            x=x-1
-        elif card_dict[players[i].weapon[0]][4]==13:
-            x=x-2
-        elif card_dict[players[i].weapon[0]][4]==77:
-            x=x-3
-        elif card_dict[players[i].weapon[0]][4]==78:
-            x=x-4
-        elif card_dict[players[i].weapon[0]][4]==79:
-            x=x-5
-        
-        
-        if x<=0:
-            temp_list.append(j)
-    if len(temp_list)==0:
-        print("Everyone is out of your range, play another card or force end the round")
-        return -1
-    for j in temp_list:
-        t_temp_list.append(j+1)
-    print("Pick a Target from",t_temp_list)
-    x=int(input(":"))
-    if x in t_temp_list:
-        print("You have choose player",x,"as your target.")
-        return x-1
-   
 
 def Set_Bomb_Buff(i,players):
     players[i].card_m(0,71)
@@ -318,5 +253,10 @@ def Bang(i,players):
     target=Check_Range_Weapon(i,players)
     print("Player",target+1,"You have been choose as a target.")
     x=Slab_the_Killer(i,players)
+    Barrel_Used=0
     while x>0:
-        pass
+        Damage_Judge(players,target,Barrel_Used)
+
+    
+    if players[target].blood<=0:
+        Beer(target,players,wasted_card_list)

@@ -5,75 +5,6 @@ from character_function import *
 from card_function import *
 from card_dict import *
 import random
-def Gameover_Check(players):
-    while True:
-        flag_t=0
-        win=0
-        if len(players)<8:
-            for i in range(len(players)):
-                if players[i].identity==len(players)-1 and players[i].blood<=0:
-                    flag_t=1
-                if players[i].identity!=len(players)-1 and players[i].blood>0:
-                    flag_t=1
-            if flag_t==0:
-                win=2 
-                break
-        else:
-            for i in range(8):
-                if players[i].identity<6 and players[i].blood>0:
-                    flag_t=1
-                if flag_t==0: 
-                    if players[i].identity==6 and players[i].blood>0:
-                        for j in range(8):
-                            if players[j].identity==7 and players[j].blood<=0:
-                                flag_t=6
-                    if players[i].identity==7 and players[i].blood>0:
-                        for j in range(8):
-                            if players[j].identity==6 and players[j].blood<=0:
-                                flag_t=7
-            if flag_t==6:
-                win=3
-                break
-            if flag_t==7:
-                win=4
-                break
-        for i in range(len(players)):
-            if players[i].identity==0 and players[i].blood<=0:
-                win=1    
-                break
-        if win==1:
-            break  
-        flag_p=0    
-        if len(players)==4:
-            for i in range(len(players)):
-                if players[i].identity>0 and players[i].blood>0:
-                    flag_p=1         
-        elif len(players)<7:
-            for i in range(len(players)):
-                if players[i].identity>1 and players[i].blood>0:
-                    flag_p=1 
-        else:            
-            for i in range(len(players)):   
-                if players[i].identity>2 and players[i].blood>0:
-                    flag_p=1 
-        if flag_p==0:
-            win=5
-            break
-        if win!=0:
-            break
-    
-    if win==1:
-        return "Game over, thief win"
-    elif win==2:
-        return "Game over, traitor win"
-    elif win==3:
-        return "Game over, traitor1 win"  
-    elif win==4:
-        return "Game over, traitor2 win"
-    elif win==5:         
-        return "Game over, police win"
-    else:
-        return 0
 
 def Darw_Card(i,players,card_list,wasted_card_list):
     
@@ -89,15 +20,6 @@ def Darw_Card(i,players,card_list,wasted_card_list):
     else:
         for j in range(2):
             players[i].card_m(1,card_list.pop())
-        
-def Judge(x,players,card_list,wasted_card_list):
-    if players[x].char==7:
-        wasted_card_list.append(card_list.pop())
-        wasted_card_list.append(card_list.pop())
-        return [wasted_card_list[-1],wasted_card_list[-2]]
-    else:
-        wasted_card_list.append(card_list.pop())
-        return [wasted_card_list[-1]]
     
 def Bomb(x,person,players,card_list,wasted_card_list):
     if len(set([1,2,3,4,5,6,7,8]) & set(Judge(x,players,card_list,wasted_card_list)))>0: #Judge fail, bomb exploid
