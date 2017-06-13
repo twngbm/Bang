@@ -49,10 +49,11 @@ for i in range(person):
 
 #Main Loop
 
-while True: #Game Loop
-    for i in range(person):    
+while True: 
+    for i in range(person):  
+        #Init player status at every start
         gameover=0
-        
+        players[i].setbang(0)
         card_list=Card_Reuse(card_list,wasted_card_list)
         
         #Live Status Check Stage
@@ -70,15 +71,7 @@ while True: #Game Loop
         #Buff Check Stage Finish
         
         #Draw Card Stage
-        players[i].blood_m(-1)
-        players[i].card_m(1,40)
-        players[i].card_m(1,44)
-        players[i].card_m(1,48)
-        players[i].card_m(1,49)
-        players[i].card_m(1,50)
-        players[i].card_m(1,51)
-        players[i].card_m(1,57)
-        players[i].card_m(1,59)
+        players[i].card_m(1,27)
         Darw_Card(i,players,card_list,wasted_card_list)
         players[i].print_status()
         #Draw Card Stage Finish
@@ -102,26 +95,27 @@ while True: #Game Loop
                 break
 
 
-            if card_dict[selected][1]==0:
-                pass
+            if card_dict[selected][1]==0 or Calamity_Janet(i,players,selected)==1:
+                gameover=Set_Attack_Card(i,players,selected,card_list,wasted_card_list)
             elif card_dict[selected][1]==1:
                 Set_Function_Card(i,players,selected,card_list,wasted_card_list)
             elif card_dict[selected][1]==2:
                 Set_Equipment(i,players,selected)
             elif card_dict[selected][1]==3:
                 Set_Buff(i,players,selected)
-
+            
+            if gameover==1:
+                break
 
         #CARD_USE_STAGE_FINISH
-
+        if gameover==1:
+            break
         
         #Discard Stage
         Discard(i,players,wasted_card_list,1) #0=online_mode,1=test_mode
         #Discard Stage Finish
         #players[i].print_status()
-    if gameover==1:
-        break
-
+    
 #Gameover
 
 win=Gameover_Check(players)

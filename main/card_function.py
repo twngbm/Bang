@@ -209,7 +209,7 @@ def Cat_Balou(i,players,wasted_card_list):#ban card
         players[target].card_m(0,choosed_card)
         wasted_card_list.append(choosed_card)
         
-        return 0
+        return target
     if choose==2:
          if len(players[target].equip)==0:
              print("players",target+1,"has no more equipment")
@@ -311,9 +311,12 @@ def General_Store(i,players,card_list):
         players[x].card_m(1,choose)
     return 0
 
+def Miss(i,players):
+    pass
 
-
-
-
-                    
-                       
+def Bang(i,players):
+    target=Check_Range_Weapon(i,players)
+    print("Player",target+1,"You have been choose as a target.")
+    x=Slab_the_Killer(i,players)
+    while x>0:
+        pass

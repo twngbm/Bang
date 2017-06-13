@@ -27,6 +27,9 @@ class player():
         self.weapon=[]
         self.buff=[]
         self.vid=1
+        self.bang=0
+    def setbang(self,x):
+        self.bang=x
     def setid(self,id):
         self.identity=id
     def setchar(self,char):

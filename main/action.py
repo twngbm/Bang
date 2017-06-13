@@ -183,28 +183,48 @@ def Set_Equipment(i,players,selected):
 
 def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
     if card_dict[selected][4]==1:
-        pass
-    if card_dict[selected][4]==3:
+        print("You are not under attack, You don't need to play Miss")
+        print("You are not Calamity Janet either, you can't use this card now")
+        status=-1
+    elif card_dict[selected][4]==3:
         status=Panic(i,players)
-    if card_dict[selected][4]==4:
+    elif card_dict[selected][4]==4:
         status=Cat_Balou(i,players,wasted_card_list)
-    if card_dict[selected][4]==5:
+    elif card_dict[selected][4]==5:
         status=Stagecoach(i,players,card_list)
-    if card_dict[selected][4]==6:
+    elif card_dict[selected][4]==6:
         status=General_Store(i,players,card_list)
-    if card_dict[selected][4]==7:
+    elif card_dict[selected][4]==7:
         status=Beer(i,players,wasted_card_list)
-    if card_dict[selected][4]==50:
+    elif card_dict[selected][4]==50:
         status=Wells(i,players,card_list)
-    if card_dict[selected][4]==59:
+    elif card_dict[selected][4]==59:
         status=Saloon(players)
     if status!=-1:
         players[i].card_m(0,selected)
         wasted_card_list.append(selected)
-    if players[status].identity==13:
-        Suzy_Lafayette(status,players,card_list)
+
+    Suzy_Lafayette(status,players,card_list)
     
-            
+def Set_Attack_Card(i,players,selected,card_list,wasted_card_list):
+    if card_dict[selected][4]==0:
+        pass
+    elif card_dict[selected][4]==1:
+        pass
+    elif card_dict[selected][4]==2:
+        pass
+    elif card_dict[selected][4]==8:
+        pass
+    elif card_dict[selected][4]==37:
+        pass
+    
+    if status!=-1:
+        players[i].card_m(0,selected)
+        wasted_card_list.append(selected)
+
+    if type(Gameover_Check(players))!=int:
+        return 1
+
 
 
 

@@ -73,10 +73,27 @@ def Pedro_Ramirex(i,players,card_list,wasted_card_list):
             print("Wasted_card_Stack is empty.Draw from Card_stack.")
             players[i].card_m(1,card_list.pop())
     players[i].card_m(1,card_list.pop())
+# darw card
+
 
 def Suzy_Lafayette(i,players,card_list):
-    if len(players[i].card)==0:
-        print("Players ",i,"You have no more card. Basic on Your character ,you can draw one card")
-        players[i].card_m(1,card_list.pop())
+    if players[i].identity==13:
+        if len(players[i].card)==0:
+            print("Players ",i,"You have no more card. Basic on Your character ,you can draw one card")
+            players[i].card_m(1,card_list.pop())
+
+def Calamity_Janet(i,players,selected):
+    if players[i].identity==2 and card_dict[selested][4]==1:
+        return 1
+    return 0
+
+def Slab_the_Killer(i,players):
+    if players[i].identity==12:
+        return 2
+    return 1
+"""
+def Paul Regret
+def Rose Doolan
+"""
 
 
