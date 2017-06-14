@@ -130,11 +130,11 @@ def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
     
 def Set_Attack_Card(i,players,selected,card_list,wasted_card_list):
     if card_dict[selected][4]==0:
-        pass
+        status=Bang(i,players)
     elif card_dict[selected][4]==1:
-        pass
+        status=Miss(i,players)
     elif card_dict[selected][4]==2:
-        pass
+        status=Indians(i,players)
     elif card_dict[selected][4]==8:
         pass
     elif card_dict[selected][4]==37:

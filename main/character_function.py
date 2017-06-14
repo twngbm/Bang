@@ -91,6 +91,11 @@ def Slab_the_Killer(i,players):
     if players[i].identity==12:
         return 2
     return 1
+
+def Jourdonnais(i,players):
+    if players[i].identity==5:
+        return 1
+    return 0
 """
 def Paul Regret
 def Rose Doolan

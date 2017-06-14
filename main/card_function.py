@@ -1,19 +1,45 @@
 from card_dict import *
 from character_function import *
 
-def Damage_Judge(players,target,Barrel_Used):
+def Damage_Judge(players,target,barrel_used):
     temp_card_list=[]
+    barrel=Jourdonnais(i,players)
     if 63 in players[target].equip or 64 in players[target].equip:
-        barrel=1
+        barrel=barrel+1
     else:
-        barrel=0
+        barrel=barrel+0
+    print("Player",target+1,"You have",barrel,"Barrel now")
+    if barrel_used==1:
+        print("You have already use a barrel.")
     if players[target].identity==2:
         print("Player",target+1,"Can use Bang as miss.")
         for j in players[target].card:
             if card_dict[j][4]==0 or card_dict[j][4]==1:
                 temp_card_list.append(j)
-        print("Player",target+1,"You have ",len(temp_card_list),"Miss! card now.")
     else:
+        for j in players[target].card:
+            if card_dict[j][4]==1:
+                temp_card_list.append(j)
+    print("Player",target+1,"You have ",len(temp_card_list),"Miss! card now.")
+    if len(temp_card_list)==0 and barrel==0:
+        print("So bad,You don't have any method to defend this attack.")
+        return -1
+    if barrel>0 and (barrel_used!=1 or barrel==2):
+        judge_card=Judge(target,players,card_list,wasted_card_list)
+        if len(set([13,14,15,16,17,18,19,20,21,22,23,24,25])&set(judge_card))>0:
+            print("Doge successful")
+            return 999
+    if temp_card_list>0:
+        print("You can play MISS to defence this attack")
+        print("Input a card ID from",temp_card_list)
+        choose=int(input(":"))
+        players[target].card_m(0,choose)
+        temp_card_list.remove(choose)
+        print("You have defen successful")
+        return 998
+    else:
+        print("You can't hide from his bullet")
+        return -1
 
 
     
@@ -247,16 +273,67 @@ def General_Store(i,players,card_list):
     return 0
 
 def Miss(i,players):
-    pass
-
-def Bang(i,players):
+    #This Miss function used only char is Calamity Janet
+    #And it use to act like BANG
+    if players[i].bang==1:
+        print("You have already use Bang in this round,choose another card")
+        return -1
     target=Check_Range_Weapon(i,players)
     print("Player",target+1,"You have been choose as a target.")
     x=Slab_the_Killer(i,players)
-    Barrel_Used=0
+    barrel_used=0
     while x>0:
-        Damage_Judge(players,target,Barrel_Used)
+        output=Damage_Judge(players,target,barrel_used)
+        if ouptup==999:
+            barrel_used=1
+        x=x-1
+    if output==-1:
+        players[target].blood_m(-1)
+        players[i].setbang(1)
+        if players[target].blood<=0:
+            Beer(target,players,wasted_card_list)
+        return target
 
-    
-    if players[target].blood<=0:
-        Beer(target,players,wasted_card_list)
+def Bang(i,players):
+    if players[i].bang==1:
+        print("You have already use Bang in this round,choose another card")
+        return -1
+    target=Check_Range_Weapon(i,players)
+    print("Player",target+1,"You have been choose as a target.")
+    x=Slab_the_Killer(i,players)
+    barrel_used=0
+    while x>0:
+        output=Damage_Judge(players,target,barrel_used)
+        if ouptup==999:
+            barrel_used=1
+        x=x-1
+    if output==-1:
+        players[target].blood_m(-1)
+        players[i].setbang(1)
+        if players[target].blood<=0:
+            Beer(target,players,wasted_card_list)
+        return target
+
+def Indians(i,players):
+    temp_players=Alive_Player(players)
+    for j in temp_players:
+        temp_card_list=[]
+        if i == j:
+            continue
+        print("Player",j+1,"you have to play a BANG! card or loose one blood")
+        for k in players[j].card:
+            if card_dict[k][4]==0:
+                temp_card_list.append(k)
+        print("Player",j+1,"You now have",len(temp_card_list),"Bang card")
+        if len(temp_card_list)==0:
+            print("To Bad ,you must loose one point of blood")
+            """
+             -blood
+             beer
+             character function
+             identitify show
+             draw card
+             gameover chick
+             """
+
+        
