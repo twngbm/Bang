@@ -28,7 +28,7 @@ for i in range(person):
 
 Set_identity(person,players,identity_list)      #Set Player Identity
 
-#Set_character(person,players,character_list)    #Set Player Character
+Set_character(person,players,character_list)    #Set Player Character
 
 Set_blood(person,players)                       #Set Player Blood
 
@@ -44,20 +44,8 @@ for i in range(person):
     players[i].print_status()
 
 #test section-------------------------
-    
-for i in range(person):
-    players[i].setchar(i)
-    players[i].card_m(1,0)
-    players[i].card_m(1,25)
-    players[i].card_m(1,37)
-    players[i].card_m(1,38)
-    players[i].card_m(1,68)
-players[0].equip_m(1,63)
-players[1].equip_m(1,63)
-    
-for i in range(person):
-    players[i].print_status()
 
+    
 #test section-------------------------
 #Main Loop
 
@@ -100,7 +88,7 @@ while True:
     
         
         #Discard Stage
-        Discard(i,players,wasted_card_list,1) #0=online_mode,1=test_mode
+        Discard(i,players,wasted_card_list,0) #0=online_mode,1=test_mode
         #Discard Stage Finish
         #players[i].print_status()
     if gameover==1:
