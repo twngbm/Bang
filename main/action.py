@@ -3,7 +3,6 @@
 ''' 1=thief win 2=traitor win 3=traitor1 win 4=traitor2 win 5=police win 0= no one win yet'''
 from character_function import *
 from card_function import *
-from card_dict import *
 import random
 
 def Darw_Card(i,players,card_list,wasted_card_list):
@@ -90,6 +89,35 @@ def Discard(i,players,wasted_card_list,test_code):
                 print("You have",players[i].card,"Now")
                 print("Enter card ID to diacard")
                 players[i].card_m(0,int(input(":")))
+
+def Use_Card(i,players,card_list,wasted_card_list):
+    while True:
+        gameover=0
+        print("\nPlayer",i+1,"you have",len(players[i].card),"cards now")
+        if len(players[i].card)==0:
+            print("You have no more card,Force end turn.")
+            return 0
+        for j in players[i].card:
+            print("\n",j,card_dict[j])
+        print("\nInput card ID to select a card to use it.")
+        print("Or input 999 to end the turn")
+        selected=int(input(":"))
+        if selected==999:
+            print("You chose to end the turn.")
+            return 0
+
+
+        if card_dict[selected][1]==0 or Calamity_Janet(i,players,selected)==1:
+            gameover=Set_Attack_Card(i,players,selected,card_list,wasted_card_list)
+        elif card_dict[selected][1]==1:
+            Set_Function_Card(i,players,selected,card_list,wasted_card_list)
+        elif card_dict[selected][1]==2:
+            Set_Equipment(i,players,selected)
+        elif card_dict[selected][1]==3:
+            Set_Buff(i,players,selected)
+            
+        if gameover==1:
+            return 1
                 
 def Set_Buff(i,players,selected):
     if card_dict[selected][4]==71:
@@ -130,15 +158,15 @@ def Set_Function_Card(i,players,selected,card_list,wasted_card_list):
     
 def Set_Attack_Card(i,players,selected,card_list,wasted_card_list):
     if card_dict[selected][4]==0:
-        status=Bang(i,players)
+        status=Bang(i,players,card_list,wasted_card_list)
     elif card_dict[selected][4]==1:
-        status=Miss(i,players)
+        status=Miss(i,players,card_list,wasted_card_list)
     elif card_dict[selected][4]==2:
-        status=Indians(i,players)
+        status=Indians(i,players,card_list,wasted_card_list)
     elif card_dict[selected][4]==8:
-        pass
+        status=Duel(i,players,card_list,wasted_card_list)
     elif card_dict[selected][4]==37:
-        pass
+        status=Gatling(i,players,card_list,wasted_card_list)
     
     if status!=-1:
         players[i].card_m(0,selected)

@@ -16,16 +16,14 @@ def Jesse_Jones(i,players,card_list):
         players[i].card_m(1,card_list.pop())
     elif mode==2:
         print("Pick a player to draw a card.")
-        for j in range(len(players)):
+        temp_players=Alive_Player(players)
+        for j in temp_players:
             if i==j:
                 continue
             print("Player" ,j+1,"have",len(players[j].card),"cards")
         while True:
             target=int(input(":"))
-            if players[target-1].vid==0:
-                print("Player",target,"is already dead,choose again.")
-                continue
-            elif len(players[target-1].card)==0:
+            if len(players[target-1].card)==0:
                 print("Player",target,"has no more card,you have to pick another player.")
                 continue
             else:
@@ -50,7 +48,7 @@ def Kit_Carlson(i,players,card_list):
     card_temp.append(card_list.pop())
     card_temp.append(card_list.pop())
     card_temp.append(card_list.pop())
-    print("You can choose two card from",card_dict[card_temp[0]],
+    print("Player",i+1,"You can choose two card from",card_dict[card_temp[0]],
           "and",card_dict[card_temp[1]],"and",card_dict[card_temp[2]],
           "Enter 1~3 to put card back to the card_stack.")
     card_back_id=card_temp[int(input(":"))-1]
@@ -77,28 +75,50 @@ def Pedro_Ramirex(i,players,card_list,wasted_card_list):
 
 
 def Suzy_Lafayette(i,players,card_list):
-    if players[i].identity==13:
+    if players[i].char==13:
         if len(players[i].card)==0:
             print("Players ",i,"You have no more card. Basic on Your character ,you can draw one card")
             players[i].card_m(1,card_list.pop())
 
 def Calamity_Janet(i,players,selected):
-    if players[i].identity==2 and card_dict[selested][4]==1:
+    if players[i].char==2 and card_dict[selested][4]==1:
         return 1
     return 0
 
 def Slab_the_Killer(i,players):
-    if players[i].identity==12:
+    if players[i].char==12:
         return 2
     return 1
 
 def Jourdonnais(i,players):
-    if players[i].identity==5:
+    if players[i].char==5:
         return 1
     return 0
+
+def Bart_Cassidy(target,players,card_list):
+    if players[target].char==0:
+        print("Player",target+1,"You can darw one card each time you loose one blood")
+        players[target].card_m(1,card_list.pop())
+        print("Player",target+1,"You have get",card_dict[players[target].card[-1]])
+
+
+def El_Gringo(i,target,players):
+    if players[target].char==3:
+        print("Player",target+1,"You can darw one card each time you loose one blood from the attacker")
+        print("Player",i+1,"have",len(players[i].card),"cards now")
+        print("Enter 1 ~",len(players[i].card),"to darw a card")
+        x=int(input(":"))
+        print("Player",target+1,"You get ",card_dict[players[i].card[x-1]])
+        players[target].card_m(1,players[i].card[x-1])
+        players[i].card_m(0,players[i].card[x-1])
+        
+
 """
 def Paul Regret
 def Rose Doolan
+def Lucky Duke
+def vulture sam
+def Willy The Kid
 """
 
 

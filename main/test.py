@@ -6,12 +6,13 @@ players=[]
 for i  in range(8):
     players.append(player(i))
     players[i].blood_m(5)
+    players[i].setid(i)
     players[i].print_status()
-x=0
-#players[x].equip_m(1,65)
-players[1].equip_m(1,66)
-print(Check_Range_No_Weapon(x,players))
+players[0].blood_m(-10)
+players[2].blood_m(-10)
+players[3].blood_m(-10)
 
+print(Gameover_Check(players))
 
 
 

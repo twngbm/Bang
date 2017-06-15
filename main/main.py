@@ -2,11 +2,8 @@ import math
 import os
 import random
 import sys
-from card_dict import *
 from game_init import *
 from action import *
-from character_function import *
-from card_function import *
 
 
 #card_dict={id:["card name",type(0~3),color(0~51),"card effect"]}
@@ -46,14 +43,30 @@ print("player number, id, char, (max_life,life),card,equip,status")
 for i in range(person):
     players[i].print_status()
 
+#test section-------------------------
+    
+for i in range(person):
+    players[i].setchar(i)
+    players[i].card_m(1,0)
+    players[i].card_m(1,25)
+    players[i].card_m(1,37)
+    players[i].card_m(1,38)
+    players[i].card_m(1,68)
+players[0].equip_m(1,63)
+players[1].equip_m(1,63)
+    
+for i in range(person):
+    players[i].print_status()
 
+#test section-------------------------
 #Main Loop
 
 while True: 
     for i in range(person):  
         #Init player status at every start
+        for j in range(len(players)):
+            players[j].print_status
         gameover=0
-        players[i].setbang(0)
         card_list=Card_Reuse(card_list,wasted_card_list)
         
         #Live Status Check Stage
@@ -71,55 +84,32 @@ while True:
         #Buff Check Stage Finish
         
         #Draw Card Stage
-        players[i].card_m(1,27)
+        
         Darw_Card(i,players,card_list,wasted_card_list)
-        players[i].print_status()
         #Draw Card Stage Finish
 
         #CARD_USE_STAGE
 
 
         #Use_Card(i,players,card_list,wasted_card_list)
-        while True:
-            print("Player",i+1,"you have",len(players[i].card),"cards now")
-            if len(players[i].card)==0:
-                print("You have no more card,Force end turn.")
-                break
-            for j in players[i].card:
-                print(j,card_dict[j])
-            print("input card ID to select a card to use it.")
-            print("Or input 999 to end the turn")
-            selected=int(input(":"))
-            if selected==999:
-                print("You chose to end the turn.")
-                break
-
-
-            if card_dict[selected][1]==0 or Calamity_Janet(i,players,selected)==1:
-                gameover=Set_Attack_Card(i,players,selected,card_list,wasted_card_list)
-            elif card_dict[selected][1]==1:
-                Set_Function_Card(i,players,selected,card_list,wasted_card_list)
-            elif card_dict[selected][1]==2:
-                Set_Equipment(i,players,selected)
-            elif card_dict[selected][1]==3:
-                Set_Buff(i,players,selected)
-            
-            if gameover==1:
-                break
+        gameover=Use_Card(i,players,card_list,wasted_card_list)
 
         #CARD_USE_STAGE_FINISH
         if gameover==1:
             break
+    
         
         #Discard Stage
         Discard(i,players,wasted_card_list,1) #0=online_mode,1=test_mode
         #Discard Stage Finish
         #players[i].print_status()
+    if gameover==1:
+        break
     
 #Gameover
 
-win=Gameover_Check(players)
-print(win)
+
+print(Gameover_Check(players))
 print("final_status:\n")
 for i in range(person):
     players[i].print_status() 

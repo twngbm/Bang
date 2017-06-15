@@ -15,7 +15,6 @@
            39404142434445464748 495051
 39~51:club[A,2,3,4,5,6,7,8,9,10,J,Q,K]
 """
-
 #Global Used Function
 
 def Gameover_Check(players):
@@ -72,7 +71,7 @@ def Gameover_Check(players):
         if flag_p==0:
             win=5
             break
-        if win!=0:
+        if win==0:
             break
     
     if win==1:
@@ -87,6 +86,7 @@ def Gameover_Check(players):
         return "Game over, police win"
     else:
         return 0
+
 
 def Judge(x,players,card_list,wasted_card_list):
     if players[x].char==7:
@@ -117,9 +117,9 @@ def Check_Range_No_Weapon(i,players):
             x=x-1
         if 66 in players[j].equip or 67 in players[j].equip:
             x=x+1
-        if players[i].identity==10:
+        if players[i].char==10:
             x=x-1
-        if players[j].identity==8:
+        if players[j].char==8:
             x=x+1
         if x<=1:
             temp_list.append(j)
@@ -142,15 +142,15 @@ def Check_Range_Weapon(i,players):
     for j in temp_players_list:
         if i ==j:
             continue
-        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),abs(len(temp_players_list)-(temp_players_list.index(i)-temp_players_list.index(j))))
+        x=min(abs(temp_players_list.index(i)-temp_players_list.index(j)),len(temp_players_list)-abs(temp_players_list.index(i)-temp_players_list.index(j)))
         
         if 65 in players[i].equip:
             x=x-1
         if 66 in players[j].equip or 67 in players[j].equip:
             x=x+1
-        if players[i].identity==10:
+        if players[i].char==10:
             x=x-1
-        if players[j].identity==8:
+        if players[j].char==8:
             x=x+1
         if len(players[i].weapon)==0:
             x=x-1
@@ -169,6 +169,7 @@ def Check_Range_Weapon(i,players):
     if len(temp_list)==0:
         print("Everyone is out of your range, play another card or force end the round")
         return -1
+    t_temp_list=[]
     for j in temp_list:
         t_temp_list.append(j+1)
     print("Pick a Target from",t_temp_list)
